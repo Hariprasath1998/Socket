@@ -1,7 +1,7 @@
 import socket
 import threading
 
-HEADER=64
+HEADER=1024
 PORT=8900
 SERVER= 'localhost'
 ADDR=(SERVER,PORT)
@@ -22,8 +22,8 @@ def handle_client(conn,addr):
             if msg==DISCONNECT_MESSAGE:
                 connected=False
             print(f"[{addr}] {msg}")
-    print('connection closed')
     conn.close()
+    print(f"connection closed for {addr}")
 
 
 def start():

@@ -1,1 +1,1 @@
-Simplex Communication using Connection Oriented service
+Simplex Communication using Connection Oriented service [TCP]

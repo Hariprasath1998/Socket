@@ -1,7 +1,7 @@
 import socket
 import threading
 
-
+HEADER=1024
 PORT=8900
 SERVER= 'localhost'
 ADDR=(SERVER,PORT)
@@ -26,11 +26,9 @@ def handle_client(conn,addr):
 
 
 def start():
+    print(f"Server @ : {ADDR}")
     while True:
         data, addr=server.recvfrom(4096)
-        print(f"Client: {data.decode(FORMAT)}")
-        message=bytes(("Connected!").encode(FORMAT))
-        server.sendto(message,addr)
+        print(f"Client {addr}: {data.decode(FORMAT)}")
         
-print("[STARTING]......")
 start()

@@ -1,2 +1,1 @@
-# Socket
-# Lab Programs
+# Computer Network Lab Programs

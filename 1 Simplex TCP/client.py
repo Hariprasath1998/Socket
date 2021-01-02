@@ -1,6 +1,6 @@
 import socket
 
-HEADER=64
+HEADER=1024
 PORT=8900
 SERVER= 'localhost'
 ADDR=(SERVER,PORT)
