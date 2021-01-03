@@ -7,12 +7,14 @@ SERVER= 'localhost'
 ADDR=(SERVER,PORT)
 FORMAT='utf-8'
 DISCONNECT_MESSAGE="!Disconnect"
+greet="Welcome!"
 
 server=socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 server.bind(ADDR)
 
 def handle_client(conn,addr):
     print(f"[New Connection] {addr} connected.")
+    conn.send(greet.encode(FORMAT))
     connected=True
     while connected:
         msg_length=conn.recv(HEADER).decode(FORMAT)

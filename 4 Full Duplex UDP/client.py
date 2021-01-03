@@ -13,12 +13,15 @@ def send(msg):
     print("Connected to server!")
     client.sendto(msg.encode(FORMAT),ADDR)
     print("Message sent")
+    data, address = client.recvfrom(HEADER)
+    # print("\n\n 2. Client received : ", data.decode('utf-8'), "\n\n")
+    print(f"Server says:  {data.decode(FORMAT)}")
     client.close()
     print("Connection closed!")
 
 while connection:
     # send(input('Message to Server: '))
-    print('Type exit if you wanna close the program')
+    print('Type exit if you wanna close connection')
     msg=input('Message to Server: ')
     if msg=='exit':
         break

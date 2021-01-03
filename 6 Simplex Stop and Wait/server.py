@@ -6,28 +6,32 @@ PORT=8900
 SERVER= 'localhost'
 ADDR=(SERVER,PORT)
 FORMAT='utf-8'
-DISCONNECT_MESSAGE="!Disconnect"
-
 server=socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-server.bind(ADDR)
 
 def handle_client(conn,addr):
     print(f"[New Connection] {addr} connected.")
-    connected=True
-    while connected:
-        msg_length=conn.recv(HEADER).decode(FORMAT)
-        if msg_length:
-            msg_length=int(msg_length)
-            msg=conn.recv(msg_length).decode(FORMAT)
-            if msg==DISCONNECT_MESSAGE:
-                connected=False
-            print(f"[{addr}] {msg}")
+    size=input('Number of packets to send: ')
+    conn.send(size.encode(FORMAT))
+    message=[]
+    for i in range(0,int(size)):
+        print(i)
+        message.append(input(f'Packet #{i+1}: '))
+    for i in range(0,int(size)):
+        print(f"Sending packet#{i+1}")
+        conn.send(message[i].encode(FORMAT))
+        ack=int(conn.recv(HEADER).decode(FORMAT))
+        print(ack)
+        if ack==1:
+            print(f"Acknowledgement received for packet#{i+1}")
+        else:
+            print("No Acknowledgement")
+            break
     conn.close()
-    print(f"connection closed for {addr}")
-
+    print("Connection closed")
 
 def start():
     print("[STARTING]......")
+    server.bind(ADDR)
     server.listen()
     print(f"Server Listening on {SERVER}:{PORT}")
     while True:
@@ -35,5 +39,6 @@ def start():
         thread=threading.Thread(target=handle_client,args=(conn,addr))
         thread.start()
         print(f"Active Connections: {threading.active_count()-1}")
+
 
 start()
